@@ -13,7 +13,7 @@
           <el-input v-model="ruleForm.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="ruleForm.password"></el-input>
+          <el-input v-model.trim="ruleForm.password"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
@@ -47,14 +47,21 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate( async valid => {
         if (valid) {
-          this.$message("成功");
+          let res=await this.$axios.post("login", this.ruleForm)
+          if (res.data.meta.status==400) {
+            console.log(res);
+            
+            this.$message.error(res.data.meta.msg)
+             this.$message.error(res.data.meta.msg);
+          }else if(res.data.meta.status==200){
+             this.$message.success(res.data.meta.msg);
+             window.sessionStorage.setItem("token",res.data.data.token);
+             this.$router.push("/")
+          }   
         } else {
-          this.$message({
-            message: "失败",
-            type: "warning"
-          });
+        this.$message.error("登录失败,请确认账号或密码正确,或者重置");
           return false;
         }
       });

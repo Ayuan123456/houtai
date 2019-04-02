@@ -17,7 +17,7 @@
           </el-col>
           <el-col :span="2">
             <div class="grid-content bg-purple anniu">
-              <el-button type="primary">退出登录</el-button>
+              <el-button type="primary" @click="loginout">退出登录</el-button>
             </div>
           </el-col>
         </el-row>
@@ -25,16 +25,16 @@
       <el-container>
         <el-aside width="200px" class="my-aside">
           <el-menu default-active="2" class="el-menu-vertical-demo" router>
-            <el-submenu index="1">
+            <el-submenu :index="it.id+''"  v-for="it in menusList " >
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>导航一</span>
+                <span>{{it.authName}}</span>
               </template>
 
-              <el-menu-item index="user">
+              <el-menu-item :index="item.path" v-for="item in it.children" >
                   
                    <span class="el-icon-menu"></span>
-                   <span>选项1</span>
+                   <span>{{item. authName }}</span>
                   
                 
               </el-menu-item>
@@ -53,12 +53,30 @@
 export default {
   data() {
     return {
-       
+       menusList:[]
     };
   },
+
+  beforeCreate(){
+    if ( !window.sessionStorage.getItem("token") ) {
+      this.$router.push("/login")
+    }
+  },
+  created(){
+    this.$axios.get('menus')
+    .then(res=>{
+      console.log(res);
+      
+      this.menusList=res.data.data
+    })
+  },
   methods: {
-   
-  }
+   loginout(){
+     window.sessionStorage.removeItem("token")
+     this.$router.push('/login')
+   }
+  },
+ 
 };
 </script>
 
