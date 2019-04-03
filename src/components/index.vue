@@ -65,7 +65,7 @@ export default {
   created(){
     this.$axios.get('menus')
     .then(res=>{
-      console.log(res);
+      // console.log(res);
       
       this.menusList=res.data.data
     })
