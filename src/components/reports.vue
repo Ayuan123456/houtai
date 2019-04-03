@@ -9,13 +9,7 @@ import echarts from  "echarts" ;
 export default {
 data() {
     return {
-     
- 
-    }
-},
-mounted(){
-    var myChart = echarts.init(document.getElementById('main'));
-    var  option = {
+   option:{
     title: {
         text: '堆叠区域图'
     },
@@ -97,9 +91,26 @@ mounted(){
             data:[820, 932, 901, 934, 1290, 1330, 1320]
         }
     ]
-};
+   }
+ 
+    }
+},
+created(){},
+ async mounted(){
+
+    var myChart = echarts.init(document.getElementById('main'));
+    let res =await this.$axios.get('reports/type/1')
+    console.log(res);
+    for (let key in res.data.data){
+        this.option[key]=res.data.data[key]
+    };
+    
+    // 默认值就是 category 数据显示的x轴方式
+    this.option.xAxis[0].type = 'category'
+    // x轴是否留白 默认是true
+    this.option.xAxis[0].boundaryGap = false
      // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+        myChart.setOption(this.option);
 }
 }
 </script>

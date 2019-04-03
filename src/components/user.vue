@@ -247,14 +247,14 @@ export default {
       // console.log(this.editList);
     },
      // 保存用户角色
-     async submitRol(editform){
-    let res =await this.$axios.put(`users/${this.editList.id}/role`,{
+    async submitRol(editform){
+      let res =await this.$axios.put(`users/${this.editList.id}/role`,{
       rid:this.editList.role_name
-    })
-     if (res.data.meta.status == 200) {
-            this.search();
-           this.jueseFormVisible=false
-          }
+      })
+       if (res.data.meta.status == 200) {
+              this.search();
+             this.jueseFormVisible=false
+            }
   },
   },
  
