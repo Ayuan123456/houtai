@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 import index from "./components/index.vue"
 import login from "./components/login.vue"
-import user from "./components/user.vue"
+import users from "./components/user.vue"
 import roles from "./components/roles.vue"
 import rights from "./components/rights.vue"
 import goods from "./components/goods.vue"
@@ -20,8 +20,8 @@ let routes = [{
         path: "/",
         component: index,
         children: [{
-                path: "user",
-                component: user,
+                path: "users",
+                component: users,
             },
             {
                 path: "roles",

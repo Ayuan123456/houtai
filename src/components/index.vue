@@ -25,7 +25,7 @@
       <el-container>
         <el-aside width="200px" class="my-aside">
           <el-menu default-active="2" class="el-menu-vertical-demo" router>
-            <el-submenu :index="it.id+''"  v-for="it in menusList " >
+            <el-submenu :index="it.id+''"  v-for="it in $store.state.menusList " >
               <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>{{it.authName}}</span>
@@ -53,7 +53,7 @@
 export default {
   data() {
     return {
-       menusList:[]
+      //  menusList:[]
     };
   },
 
@@ -65,9 +65,9 @@ export default {
   created(){
     this.$axios.get('menus')
     .then(res=>{
-      // console.log(res);
+      console.log(res);
       
-      this.menusList=res.data.data
+      this.$store.commit('changmen',res.data.data)
     })
   },
   methods: {

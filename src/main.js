@@ -12,6 +12,7 @@ Vue.use(axios)
 
 import { from } from 'array-flatten';
 
+import store from "./store"
 
 Vue.use(ElementUI);
 // 拦截请求, 比如在发请求前统一设置token
@@ -19,5 +20,6 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')
